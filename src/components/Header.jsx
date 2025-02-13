@@ -9,12 +9,30 @@ import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import { deepPurple } from '@mui/material/colors'
+import PersonIcon from '@mui/icons-material/Person'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
+import LogoutIcon from '@mui/icons-material/Logout'
+import { useNavigate } from 'react-router-dom'
+import { signOut } from 'firebase/auth'
+import { auth } from '../utils/firebase'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeUser } from '../utils/userSlice'
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const IconText = ({ icon, text, onClick }) => {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={onClick}>
+      {icon}
+      <Typography sx={{ ml: 1 }}>{text}</Typography>
+    </Box>
+  )
+}
 
-const Header = ({ isSignIn }) => {
+const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const selection = useSelector((store) => store.user)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -24,20 +42,57 @@ const Header = ({ isSignIn }) => {
     setAnchorElUser(null)
   }
 
+  const settings = [
+    {
+      id: 1,
+      name: selection.user?.user?.displayName,
+      icon: <PersonIcon />,
+      onClick: () => {
+        navigate('/profile')
+      },
+    },
+    {
+      id: 2,
+      name: 'Account',
+      icon: <ManageAccountsIcon />,
+      onClick: () => {
+        navigate('/account')
+      },
+    },
+    {
+      id: 3,
+      name: 'Sign out of Netflix',
+      icon: <LogoutIcon />,
+      onClick: () => {
+        signOut(auth)
+          .then(() => {
+            dispatch(removeUser())
+            navigate('/')
+          })
+          .catch((error) => {
+            navigate('/error')
+          })
+      },
+    },
+  ]
+
   return (
     <AppBar position="fixed" color="transparent">
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" >
         <Toolbar
           disableGutters
           sx={{ display: 'flex', justifyContent: 'space-between' }}
         >
           <img src="./netflix-logo.svg" alt="netflix" width={90} height={90} />
 
-          {!isSignIn && (
+          {selection.user && (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar sx={{ bgcolor: deepPurple[500] }}></Avatar>
+                  <Avatar
+                    alt="Travis Howard"
+                    src={selection.user?.user?.photoURL}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -57,10 +112,12 @@ const Header = ({ isSignIn }) => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>
-                      {setting}
-                    </Typography>
+                  <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
+                    <IconText
+                      icon={setting.icon}
+                      text={setting.name}
+                      onClick={setting.onClick}
+                    />
                   </MenuItem>
                 ))}
               </Menu>

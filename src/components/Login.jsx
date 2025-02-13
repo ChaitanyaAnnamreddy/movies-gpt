@@ -11,9 +11,12 @@ import MuiCard from '@mui/material/Card'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth'
 import { auth } from '../utils/firebase'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { addUser } from '../utils/userSlice'
 
 const SignUpContainer = styled(Stack)(() => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
@@ -57,6 +60,7 @@ const Login = () => {
   const nameRef = useRef(null)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const validateInputs = () => {
     const email = emailRef.current?.value
@@ -110,8 +114,29 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user
-          console.log('user details', user)
-          navigate('/browser')
+          updateProfile(user, {
+            displayName: name,
+            photoURL: 'https://mui.com/static/images/avatar/1.jpg',
+          })
+            .then(() => {
+              // Profile updated!
+              const { uid, email, displayName, photoURL } = auth.currentUser
+              dispatch(
+                addUser({
+                  user: {
+                    uid: uid,
+                    email: email,
+                    displayName: displayName,
+                    photoURL: photoURL,
+                  },
+                })
+              )
+              navigate('/browse')
+            })
+            .catch((error) => {
+              // An error occurred
+              setSignUpError(error.message)
+            })
         })
         .catch((error) => {
           const errorCode = error.code
@@ -123,7 +148,7 @@ const Login = () => {
       //signIn logic
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          navigate('/browser')
+          navigate('/browse')
         })
         .catch((error) => {
           const errorCode = error.code
@@ -143,7 +168,7 @@ const Login = () => {
 
   return (
     <BackgroundImage>
-      <Header isSignIn={isSignIn} />
+      <Header />
       <SignUpContainer direction="column" justifyContent="center">
         <Card sx={{ minWidth: 275 }}>
           <Box

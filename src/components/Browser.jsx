@@ -1,4 +1,10 @@
-const Browser = () => {
-  return <div>Browser</div>
+import Header from './Header'
+
+const Browse = () => {
+  return (
+    <div>
+      <Header />
+    </div>
+  )
 }
-export default Browser
+export default Browse
