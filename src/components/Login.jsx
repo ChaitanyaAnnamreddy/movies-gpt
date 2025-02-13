@@ -8,6 +8,12 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Stack from '@mui/material/Stack'
 import MuiCard from '@mui/material/Card'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth'
+import { auth } from '../utils/firebase'
+import { useNavigate } from 'react-router'
 
 const SignUpContainer = styled(Stack)(() => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
@@ -43,10 +49,14 @@ const Login = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
   const [nameError, setNameError] = useState(false)
   const [nameErrorMessage, setNameErrorMessage] = useState('')
+  const [signInError, setSignInError] = useState('')
+  const [signUpError, setSignUpError] = useState('')
 
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
   const nameRef = useRef(null)
+
+  const navigate = useNavigate()
 
   const validateInputs = () => {
     const email = emailRef.current?.value
@@ -91,11 +101,37 @@ const Login = () => {
       return
     }
     const data = new FormData(event.currentTarget)
-    console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+    const name = data.get('name')
+    const email = data.get('email')
+    const password = data.get('password')
+    if (!isSignIn) {
+      //signUp logic
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user
+          console.log('user details', user)
+          navigate('/browser')
+        })
+        .catch((error) => {
+          const errorCode = error.code
+          const errorMessage = error.message
+          setSignUpError('Email already exists.')
+          console.log(errorCode, errorMessage)
+        })
+    } else {
+      //signIn logic
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          navigate('/browser')
+        })
+        .catch((error) => {
+          const errorCode = error.code
+          const errorMessage = error.message
+          setSignInError('Invalid email or password.')
+          console.log(errorCode, errorMessage)
+        })
+    }
   }
 
   const handleSignUpForm = () => {
@@ -172,7 +208,16 @@ const Login = () => {
                 label="Password"
               />
             </FormControl>
-
+            {signInError && (
+              <Typography sx={{ color: 'error.main' }}>
+                {signInError}
+              </Typography>
+            )}
+            {signUpError && (
+              <Typography sx={{ color: 'error.main' }}>
+                {signUpError}
+              </Typography>
+            )}
             <Button fullWidth variant="contained" type="submit">
               {isSignIn ? 'Sign In' : 'Sign Up'}
             </Button>
