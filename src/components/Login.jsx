@@ -106,7 +106,7 @@ const Login = () => {
     const password = data.get('password')
     if (!isSignIn) {
       //signUp logic
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, email, password, name)
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user
