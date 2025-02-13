@@ -13,7 +13,7 @@ import { deepPurple } from '@mui/material/colors'
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
-const Header = () => {
+const Header = ({ isSignIn }) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
   const handleOpenUserMenu = (event) => {
@@ -25,7 +25,7 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="static" color="transparent">
+    <AppBar position="fixed" color="transparent">
       <Container maxWidth="xl">
         <Toolbar
           disableGutters
@@ -33,37 +33,39 @@ const Header = () => {
         >
           <img src="./netflix-logo.svg" alt="netflix" width={90} height={90} />
 
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: deepPurple[500] }}></Avatar>
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {!isSignIn && (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar sx={{ bgcolor: deepPurple[500] }}></Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                      {setting}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

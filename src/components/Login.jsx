@@ -1,136 +1,207 @@
+import React, { useState, useRef } from 'react'
 import Header from './Header'
-import React, { useState } from 'react'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import styled from 'styled-components'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import Stack from '@mui/material/Stack'
+import MuiCard from '@mui/material/Card'
+
+const SignUpContainer = styled(Stack)(() => ({
+  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+  minHeight: '100%',
+}))
 
 const BackgroundImage = styled.div`
   background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/f268d374-734d-474f-ad13-af5ba87ef9fc/web/IN-en-20250210-TRIFECTA-perspective_92338d5d-6ccd-4b1a-8536-eb2b0240a55e_large.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh; /* Ensures it takes full viewport height */
-  width: 100vw; /* Ensures it takes full viewport width */
   align-items: center;
   justify-content: center;
 `
 
-const LoginCard = styled(Card)`
-  width: 600px;
-  height: 500px;
-  margin: 50px auto;
-  border-radius: 20px !important;
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 600px) {
-    width: 80%;
-    margin: 50px auto;
-  }
-`
-
-const TextFieldStyled = styled(TextField)`
-  background-color: rgba(255, 255, 255, 0.8) !important;
-`
-
-const StyledTypography = styled(Typography)`
-  color: #ffffff !important;
-  font-size: 20px !important;
-  font-weight: bold !important;
-  margin: 0px 0px 0px -125px !important;
-`
-
-const SignUpTypography = styled(Typography)`
-  margin-top: 10px !important;
-  color: #ffffff !important;
-  font-size: 14px !important;
-  font-weight: bold !important;
-  //   margin: 0px 0px 0px -125px !important;
-`
-
-const FullWidthButton = styled(Button)`
-  padding: 8px 70px !important;
-  background-color: rgb(229, 9, 20) !important;
-  text-transform: none !important;
-
-  &:hover {
-    background-color: rgb(193, 17, 25) !important;
-  }
-`
+const Card = styled(MuiCard)(() => ({
+  width: '30%',
+  borderRadius: '16px !important',
+  display: 'flex',
+  flexDirection: 'column',
+  alignSelf: 'center',
+  padding: 30,
+  margin: '20px auto',
+  justifyContent: 'center',
+  backgroundColor: 'rgba(255, 255, 255, 0.8) !important',
+}))
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true)
+  const [emailError, setEmailError] = useState(false)
+  const [emailErrorMessage, setEmailErrorMessage] = useState('')
+  const [passwordError, setPasswordError] = useState(false)
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
+  const [nameError, setNameError] = useState(false)
+  const [nameErrorMessage, setNameErrorMessage] = useState('')
+
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+  const nameRef = useRef(null)
+
+  const validateInputs = () => {
+    const email = emailRef.current?.value
+    const password = passwordRef.current?.value
+    const name = nameRef.current?.value
+
+    let isValid = true
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setEmailError(true)
+      setEmailErrorMessage('Please enter a valid email address.')
+      isValid = false
+    } else {
+      setEmailError(false)
+      setEmailErrorMessage('')
+    }
+
+    if (!password || password.length < 6) {
+      setPasswordError(true)
+      setPasswordErrorMessage('Password must be at least 6 characters long.')
+      isValid = false
+    } else {
+      setPasswordError(false)
+      setPasswordErrorMessage('')
+    }
+
+    if (!isSignIn && (!name || name.length < 1)) {
+      setNameError(true)
+      setNameErrorMessage('Full name is required.')
+      isValid = false
+    } else {
+      setNameError(false)
+      setNameErrorMessage('')
+    }
+
+    return isValid
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    if (!validateInputs()) {
+      return
+    }
+    const data = new FormData(event.currentTarget)
+    console.log({
+      name: data.get('name'),
+      email: data.get('email'),
+      password: data.get('password'),
+    })
+  }
 
   const handleSignUpForm = () => {
     setIsSignIn(!isSignIn)
+    setEmailError(false)
+    setPasswordError(false)
+    setNameError(false)
   }
 
   return (
     <BackgroundImage>
-      <Header />
-      <LoginCard sx={{ minWidth: 275 }}>
-        <StyledTypography
-          gutterBottom
-          sx={{ color: 'text.secondary', fontSize: 14 }}
-          variant="body2"
-        >
-          {isSignIn ? 'Sign In' : 'Sign Up'}
-        </StyledTypography>
-        <CardActions style={{ backgroundColor: 'transparent' }}>
-          {!isSignIn && (
-            <TextFieldStyled
-              id="filled-password-input"
-              label="Full name"
-              type="input"
-              variant="filled"
-            />
-          )}
-        </CardActions>
-        <CardActions style={{ backgroundColor: 'transparent' }}>
-          <TextFieldStyled
-            id="filled-password-input"
-            label="Email"
-            type="email"
-            variant="filled"
-          />
-        </CardActions>
-        <CardActions style={{ backgroundColor: 'transparent' }}>
-          <TextFieldStyled
-            required
-            id="outlined-basic"
-            label="Password"
-            type="password"
-            variant="filled"
-          />
-        </CardActions>
-        <CardActions>
-          <FullWidthButton variant="contained">
-            {isSignIn ? 'Sign In' : 'Sign Up'}
-          </FullWidthButton>
-        </CardActions>
-        <SignUpTypography
-          gutterBottom
-          sx={{ color: 'text.secondary', fontSize: 14 }}
-          variant="body2"
-        >
-          {!isSignIn ? 'Already a user?' : 'New to Netflix?'}
-          <Button
-            variant="contained"
-            color="success"
-            onClick={handleSignUpForm}
-            style={{ textTransform: 'none', marginLeft: '6px' }}
+      <Header isSignIn={isSignIn} />
+      <SignUpContainer direction="column" justifyContent="center">
+        <Card sx={{ minWidth: 275 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
-            {!isSignIn ? 'Sign In' : 'Sign Up'}
-          </Button>
-        </SignUpTypography>
-      </LoginCard>
+            <Typography
+              gutterBottom
+              sx={{
+                color: 'text.secondary',
+                fontWeight: 'bold',
+                fontFamily: 'Inter, sans-serif',
+                padding: '8px',
+              }}
+              component="h6"
+              variant="h4"
+            >
+              {isSignIn ? 'Sign In' : 'Sign Up'}
+            </Typography>
+
+            {!isSignIn && (
+              <FormControl fullWidth>
+                <TextField
+                  autoComplete="name"
+                  name="name"
+                  fullWidth
+                  inputRef={nameRef}
+                  placeholder="Full name"
+                  error={nameError}
+                  helperText={nameErrorMessage}
+                  label="Full name"
+                />
+              </FormControl>
+            )}
+
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                name="email"
+                inputRef={emailRef}
+                autoComplete="email"
+                placeholder="your@email.com"
+                variant="outlined"
+                error={emailError}
+                helperText={emailErrorMessage}
+                label="Email"
+              />
+            </FormControl>
+
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                name="password"
+                inputRef={passwordRef}
+                placeholder="••••••"
+                type="password"
+                autoComplete="new-password"
+                variant="outlined"
+                error={passwordError}
+                helperText={passwordErrorMessage}
+                label="Password"
+              />
+            </FormControl>
+
+            <Button fullWidth variant="contained" type="submit">
+              {isSignIn ? 'Sign In' : 'Sign Up'}
+            </Button>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography
+              sx={{
+                color: 'text.secondary',
+                fontSize: 14,
+                padding: '8px',
+                textAlign: 'center',
+              }}
+              variant="body2"
+            >
+              {!isSignIn ? 'Already have an account?' : 'New to Netflix?'}
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleSignUpForm}
+                sx={{ textTransform: 'none', marginLeft: '6px' }}
+              >
+                {!isSignIn ? 'Sign In' : 'Sign Up'}
+              </Button>
+            </Typography>
+          </Box>
+        </Card>
+      </SignUpContainer>
     </BackgroundImage>
   )
 }
+
 export default Login
