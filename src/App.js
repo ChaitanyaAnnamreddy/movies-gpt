@@ -11,9 +11,7 @@ function App() {
   return (
     <div className="App">
       <Header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        <p>Movies-GPT</p>
         <ButtonUsage />
       </Header>
     </div>
