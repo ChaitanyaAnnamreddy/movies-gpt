@@ -108,7 +108,7 @@ const Header = () => {
         }),
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="2560px">
         <Toolbar
           disableGutters
           sx={{ display: 'flex', justifyContent: 'space-between' }}

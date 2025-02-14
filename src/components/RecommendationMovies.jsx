@@ -7,7 +7,7 @@ import { Typography } from '@mui/material'
 const { Meta } = AntdCard
 
 const CarouselWrapper = styled(Carousel)`
-  margin-top: 10px;
+  margin-top: -120px;
 
   @media (max-width: 1024px) {
     margin-top: -80px;
@@ -45,21 +45,23 @@ const Image = styled(AntdImage)`
   border-radius: 10px !important;
 `
 
-const NowPlaying = () => {
-  const movies = useSelector((store) => store.movies?.nowPlayingMovies)
+const RecommendationMovies = () => {
+  const movies = useSelector((store) => store.movies?.recommendationsMovies)
   if (!movies) return null
   //   console.log('movies', movies)
 
   return (
     <>
       <Typography
-        color="white"
+        color="White"
         sx={{
           ml: 2,
           fontSize: { xs: '16px', md: '26px' },
+          position: 'absolute',
+          marginTop: { xs: '-30px', sm: '-40px', md: '-120px', lg: '-170px' },
         }}
       >
-        Now Playing
+        Recommendations
       </Typography>
       <CarouselWrapper
         arrows
@@ -93,4 +95,4 @@ const NowPlaying = () => {
   )
 }
 
-export default NowPlaying
+export default RecommendationMovies

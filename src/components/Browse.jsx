@@ -3,6 +3,7 @@ import React from 'react'
 import useNowPlayingMovies from '../utils/useNowPlayingMovies'
 import usePopularMovies from '../utils/usePopularMovies'
 import useTopRatedMovies from '../utils/useTopRatedMovies'
+import useRecommendationsMovies from '../utils/useRecommendations'
 import MainContainer from './MainContainer'
 import SecondaryContainer from './SecondaryContainer'
 import { Container } from '@mui/material'
@@ -18,6 +19,7 @@ const Browse = () => {
   useNowPlayingMovies()
   usePopularMovies()
   useTopRatedMovies()
+  useRecommendationsMovies()
 
   return (
     <StyledContainer maxWidth={false}>

@@ -14,8 +14,8 @@ const VideoTitle = ({ title, overview, img }) => {
           position: 'absolute',
           width: '100vw',
           aspectRatio: '16 / 9',
-          paddingTop: { xs: '5%', sm: '20%' },
-          paddingLeft: { xs: '20px', sm: '30px' },
+          paddingTop: { xs: '30%', sm: '20%', md: '18%', lg: '25%', xl: '35%' },
+          paddingLeft: { xs: '20px', sm: '20px', md: '25px' },
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
@@ -33,6 +33,7 @@ const VideoTitle = ({ title, overview, img }) => {
           width={{ xs: '60%', sm: '40%', md: '30%' }}
           fontSize={{ xs: '10px', sm: '14px', md: '16px' }}
           color="rgba(255, 255, 255, 0.6)"
+          display={{ xs: 'none', sm: 'block' }}
         >
           {overview}
         </Typography>
