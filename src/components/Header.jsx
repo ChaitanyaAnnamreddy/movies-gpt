@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
@@ -13,19 +12,21 @@ import PersonIcon from '@mui/icons-material/Person'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from 'react-router-dom'
-import { signOut } from 'firebase/auth'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../utils/firebase'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeUser } from '../utils/userSlice'
+import { addUser, removeUser } from '../utils/userSlice'
+import styled from 'styled-components'
+import IconText from '../utils/IconText'
 
-const IconText = ({ icon, text, onClick }) => {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={onClick}>
-      {icon}
-      <Typography sx={{ ml: 1 }}>{text}</Typography>
-    </Box>
-  )
-}
+const StyledHeader = styled(AppBar)`
+  box-shadow: none !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 10%,
+    transparent
+  );
+`
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -42,10 +43,34 @@ const Header = () => {
     setAnchorElUser(null)
   }
 
+  React.useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user
+        dispatch(
+          addUser({
+            uid,
+            email,
+            displayName,
+            photoURL,
+          })
+        )
+        navigate('/browse')
+      } else {
+        dispatch(removeUser())
+        navigate('/')
+      }
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [dispatch, navigate])
+
   const settings = [
     {
       id: 1,
-      name: selection.user?.user?.displayName,
+      name: selection.user?.displayName,
       icon: <PersonIcon />,
       onClick: () => {
         navigate('/profile')
@@ -65,20 +90,25 @@ const Header = () => {
       icon: <LogoutIcon />,
       onClick: () => {
         signOut(auth)
-          .then(() => {
-            dispatch(removeUser())
-            navigate('/')
-          })
-          .catch((error) => {
-            navigate('/error')
-          })
+          .then(() => {})
+          .catch((error) => {})
       },
     },
   ]
 
   return (
-    <AppBar position="fixed" color="transparent">
-      <Container maxWidth="xl" >
+    <StyledHeader
+      position="sticky"
+      color="white"
+      style={{
+        ...(selection.user && {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backgroundImage:
+            'linear-gradient(180deg, rgba(0, 0, 0, 0.8) 100%, transparent)',
+        }),
+      }}
+    >
+      <Container maxWidth="xl">
         <Toolbar
           disableGutters
           sx={{ display: 'flex', justifyContent: 'space-between' }}
@@ -89,10 +119,7 @@ const Header = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Travis Howard"
-                    src={selection.user?.user?.photoURL}
-                  />
+                  <Avatar alt="Travis Howard" src={selection.user?.photoURL} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -125,7 +152,7 @@ const Header = () => {
           )}
         </Toolbar>
       </Container>
-    </AppBar>
+    </StyledHeader>
   )
 }
 export default Header

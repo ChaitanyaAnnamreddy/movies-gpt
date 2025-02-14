@@ -14,9 +14,9 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { auth } from '../utils/firebase'
-import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice'
+import { USER_IMG } from '../utils/constants'
 
 const SignUpContainer = styled(Stack)(() => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
@@ -59,7 +59,6 @@ const Login = () => {
   const passwordRef = useRef(null)
   const nameRef = useRef(null)
 
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const validateInputs = () => {
@@ -116,7 +115,7 @@ const Login = () => {
           const user = userCredential.user
           updateProfile(user, {
             displayName: name,
-            photoURL: 'https://mui.com/static/images/avatar/1.jpg',
+            photoURL: USER_IMG,
           })
             .then(() => {
               // Profile updated!
@@ -131,7 +130,6 @@ const Login = () => {
                   },
                 })
               )
-              navigate('/browse')
             })
             .catch((error) => {
               // An error occurred
@@ -147,9 +145,7 @@ const Login = () => {
     } else {
       //signIn logic
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          navigate('/browse')
-        })
+        .then((userCredential) => {})
         .catch((error) => {
           const errorCode = error.code
           const errorMessage = error.message
