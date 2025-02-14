@@ -8,7 +8,6 @@ import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import PersonIcon from '@mui/icons-material/Person'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from 'react-router-dom'
@@ -18,6 +17,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUser, removeUser } from '../utils/userSlice'
 import styled from 'styled-components'
 import IconText from '../utils/IconText'
+import { Input } from 'antd'
+
+const { Search } = Input
 
 const StyledHeader = styled(AppBar)`
   box-shadow: none !important;
@@ -26,6 +28,11 @@ const StyledHeader = styled(AppBar)`
     rgba(0, 0, 0, 0.7) 10%,
     transparent
   );
+`
+
+const AvatarStyled = styled(Avatar)`
+  width: 24px !important;
+  height: 24px !important;
 `
 
 const Header = () => {
@@ -71,7 +78,7 @@ const Header = () => {
     {
       id: 1,
       name: selection.user?.displayName,
-      icon: <PersonIcon />,
+      icon: <AvatarStyled src={selection.user?.photoURL} />,
       onClick: () => {
         navigate('/profile')
       },
@@ -114,42 +121,54 @@ const Header = () => {
           sx={{ display: 'flex', justifyContent: 'space-between' }}
         >
           <img src="./netflix-logo.svg" alt="netflix" width={90} height={90} />
-
-          {selection.user && (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Travis Howard" src={selection.user?.photoURL} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
-                    <IconText
-                      icon={setting.icon}
-                      text={setting.name}
-                      onClick={setting.onClick}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Search
+              style={{ width: 304 }}
+              placeholder="Search using GPT"
+              // onSearch={onSearch}
+              enterButton
+              allowClear
+              size="large"
+            />
+            {selection.user && (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Travis Howard"
+                      src={selection.user?.photoURL}
                     />
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          )}
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
+                      <IconText
+                        icon={setting.icon}
+                        text={setting.name}
+                        onClick={setting.onClick}
+                      />
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            )}
+          </Box>
         </Toolbar>
       </Container>
     </StyledHeader>

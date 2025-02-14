@@ -12,7 +12,7 @@ const Card = styled(AntdCard)`
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   .ant-card-body {
-    padding: 0 10px 0px !important;
+    padding: 0 10px 20px !important;
   }
 
   .ant-card-meta {
@@ -29,10 +29,10 @@ const Image = styled(AntdImage)`
   border-radius: 10px !important;
 `
 
-const Popular = () => {
-  const movies = useSelector((store) => store.movies?.popularMovies)
+const AwardWinningTvShows = () => {
+  const movies = useSelector((store) => store.movies?.awardWinningTvShows)
   if (!movies) return null
-  console.log('popularMovies', movies)
+  console.log('awardWinningTvShows', movies)
 
   return (
     <>
@@ -43,7 +43,7 @@ const Popular = () => {
           fontSize: { xs: '16px', md: '26px' },
         }}
       >
-        Popular Movies
+        Award Winning Tv Shows
       </Typography>
       <Carousel
         arrows
@@ -77,4 +77,4 @@ const Popular = () => {
   )
 }
 
-export default Popular
+export default AwardWinningTvShows

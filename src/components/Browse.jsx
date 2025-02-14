@@ -8,6 +8,7 @@ import MainContainer from './MainContainer'
 import SecondaryContainer from './SecondaryContainer'
 import { Container } from '@mui/material'
 import styled from 'styled-components'
+import useAwardWinningTvShows from '../utils/useAwardWinningTvShows'
 
 const StyledContainer = styled(Container)`
   padding-left: 0px !important;
@@ -20,6 +21,7 @@ const Browse = () => {
   usePopularMovies()
   useTopRatedMovies()
   useRecommendationsMovies()
+  useAwardWinningTvShows()
 
   return (
     <StyledContainer maxWidth={false}>

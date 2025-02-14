@@ -11,7 +11,7 @@ const useRecommendationsMovies = () => {
     const getRecommendationsMovies = async () => {
       try {
         const response = await fetch(
-          'https://api.themoviedb.org/3/movie/426063/recommendations?language=en-US&page=1',
+          'https://api.themoviedb.org/3/movie/426063/recommendations?language=hi-IN&page=1',
           API_URL
         )
         const json = await response.json()

@@ -9,7 +9,7 @@ const useMovieTrailer = (movieId) => {
   useEffect(() => {
     const getVideoUrl = async (movieId) => {
       const data = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
+        `https://api.themoviedb.org/3/movie/822119/videos?language=en-US`,
         API_URL
       )
       const json = await data.json()
