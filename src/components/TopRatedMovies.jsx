@@ -55,7 +55,6 @@ const Image = styled(AntdImage)`
 const TopRatedMovies = () => {
   const movies = useSelector((store) => store.movies?.topRatedMovies)
   if (!movies) return null
-  console.log('topRatedMovies', movies)
 
   return (
     <>

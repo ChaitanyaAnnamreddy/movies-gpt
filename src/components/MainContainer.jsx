@@ -7,7 +7,6 @@ const MainContainer = () => {
   if (!movies) return null
 
   const mainMovie = movies[3]
-  console.log('mainMovie', mainMovie)
 
   const { title, overview, backdrop_path, id } = mainMovie
   return (

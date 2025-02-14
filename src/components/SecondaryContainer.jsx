@@ -7,7 +7,7 @@ import AwardWinningTvShows from './AwardWinningTvShows'
 
 const SecondaryContainer = () => {
   return (
-    <Flex vertical gap={20}>
+    <Flex vertical gap={20} style={{ paddingBottom: '50px' }}>
       <RecommendationMovies />
       <NowPlaying />
       <TopRatedMovies />

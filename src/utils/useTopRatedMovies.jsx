@@ -15,7 +15,6 @@ const useTopRatedMovies = () => {
           API_URL
         )
         const json = await response.json()
-        console.log('topRated', json)
         dispatch(addTopRatedMovies(json.results))
       } catch (error) {
         console.error('Error fetching top rated movies:', error)

@@ -32,7 +32,6 @@ const Image = styled(AntdImage)`
 const Popular = () => {
   const movies = useSelector((store) => store.movies?.popularMovies)
   if (!movies) return null
-  console.log('popularMovies', movies)
 
   return (
     <>

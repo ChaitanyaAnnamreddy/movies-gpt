@@ -32,7 +32,6 @@ const Image = styled(AntdImage)`
 const AwardWinningTvShows = () => {
   const movies = useSelector((store) => store.movies?.awardWinningTvShows)
   if (!movies) return null
-  console.log('awardWinningTvShows', movies)
 
   return (
     <>

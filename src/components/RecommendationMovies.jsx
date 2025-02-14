@@ -55,7 +55,6 @@ const Image = styled(AntdImage)`
 const RecommendationMovies = () => {
   const movies = useSelector((store) => store.movies?.recommendationsMovies)
   if (!movies) return null
-  //   console.log('movies', movies)
 
   return (
     <>
