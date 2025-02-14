@@ -4,6 +4,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import Stack from '@mui/material/Stack'
 import { Container } from '@mui/material'
 import { Typography } from '@mui/material'
+import langConstants from '../utils/langConstants'
 
 const VideoTitle = ({ title, overview, img }) => {
   return (
@@ -49,7 +50,7 @@ const VideoTitle = ({ title, overview, img }) => {
               borderColor: 'white',
             }}
           >
-            Play
+            {langConstants.play.en}
           </Button>
           <Button
             variant="outlined"
@@ -61,7 +62,7 @@ const VideoTitle = ({ title, overview, img }) => {
               borderColor: 'rgba(109, 109, 110, 0.1)',
             }}
           >
-            More Info
+            {langConstants.moreInfo.en}
           </Button>
         </Stack>
       </Container>

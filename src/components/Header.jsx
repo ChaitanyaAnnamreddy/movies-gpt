@@ -17,17 +17,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUser, removeUser } from '../utils/userSlice'
 import styled from 'styled-components'
 import IconText from '../utils/IconText'
-import { Input } from 'antd'
+// import { Input } from 'antd'
+import { Button } from '@mui/material'
+import { toggleGptSearch } from '../utils/useGptSlice'
+import langConstants from '../utils/langConstants'
+import { Dropdown, Space } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
+import { setLanguage } from '../utils/languageSlice'
 
-const { Search } = Input
+// const { Search } = Input
 
 const StyledHeader = styled(AppBar)`
   box-shadow: none !important;
-  background-image: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.7) 10%,
-    transparent
-  );
 `
 
 const AvatarStyled = styled(Avatar)`
@@ -41,6 +42,7 @@ const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const selection = useSelector((store) => store.user)
+  const selectedLang = useSelector((state) => state.language.selectedLang)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -48,6 +50,10 @@ const Header = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearch())
   }
 
   React.useEffect(() => {
@@ -85,7 +91,7 @@ const Header = () => {
     },
     {
       id: 2,
-      name: 'Account',
+      name: langConstants.account[selectedLang],
       icon: <ManageAccountsIcon />,
       onClick: () => {
         navigate('/account')
@@ -93,7 +99,7 @@ const Header = () => {
     },
     {
       id: 3,
-      name: 'Sign out of Netflix',
+      name: langConstants.signOutNetflix[selectedLang],
       icon: <LogoutIcon />,
       onClick: () => {
         signOut(auth)
@@ -103,18 +109,78 @@ const Header = () => {
     },
   ]
 
+  const handleMenuClick = ({ key }) => {
+    dispatch(setLanguage(key))
+  }
+
+  const items = [
+    {
+      key: 'en',
+      label: langConstants.en,
+    },
+    {
+      key: 'es',
+      label: langConstants.es,
+    },
+    {
+      key: 'fr',
+      label: langConstants.fr,
+    },
+    {
+      key: 'de',
+      label: langConstants.de,
+    },
+    {
+      key: 'it',
+      label: langConstants.it,
+    },
+    {
+      key: 'ja',
+      label: langConstants.ja,
+    },
+    {
+      key: 'ko',
+      label: langConstants.ko,
+    },
+    {
+      key: 'pt',
+      label: langConstants.pt,
+    },
+    {
+      key: 'ru',
+      label: langConstants.ru,
+    },
+    {
+      key: 'zh',
+      label: langConstants.zh,
+    },
+    {
+      key: 'hi',
+      label: langConstants.hi,
+    },
+    {
+      key: 'ta',
+      label: langConstants.ta,
+    },
+    {
+      key: 'kn',
+      label: langConstants.kn,
+    },
+    {
+      key: 'te',
+      label: langConstants.te,
+    },
+    {
+      key: 'ml',
+      label: langConstants.ml,
+    },
+  ]
+
+  const selectedLanguageLabel =
+    items.find((item) => item.key === selectedLang)?.label || 'English'
+
   return (
-    <StyledHeader
-      position="sticky"
-      color="white"
-      style={{
-        ...(selection.user && {
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          backgroundImage:
-            'linear-gradient(180deg, rgba(0, 0, 0, 0.8) 100%, transparent)',
-        }),
-      }}
-    >
+    <StyledHeader position="sticky" color="white">
       <Container maxWidth="2560px">
         <Toolbar
           disableGutters
@@ -122,14 +188,28 @@ const Header = () => {
         >
           <img src="./netflix-logo.svg" alt="netflix" width={90} height={90} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Search
-              style={{ width: 304 }}
-              placeholder="Search using GPT"
-              // onSearch={onSearch}
-              enterButton
-              allowClear
-              size="large"
-            />
+            <Dropdown
+              menu={{ items, onClick: handleMenuClick }}
+              trigger={['click']}
+              arrow={{ pointAtCenter: true }}
+              placement="bottom"
+            >
+              <Button variant="contained" sx={{ textTransform: 'none' }}>
+                <Space>
+                  {selectedLanguageLabel} <DownOutlined />
+                </Space>
+              </Button>
+            </Dropdown>
+            {selection.user && (
+              <Button
+                type="button"
+                variant="contained"
+                onClick={handleGptSearchClick}
+                sx={{ textTransform: 'none' }}
+              >
+                {langConstants.gptSearch[selectedLang]}
+              </Button>
+            )}
             {selection.user && (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Open settings">

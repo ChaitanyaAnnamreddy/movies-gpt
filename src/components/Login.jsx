@@ -14,9 +14,11 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { auth } from '../utils/firebase'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 import { USER_IMG } from '../utils/constants'
+import { backgroundImage } from '../utils/constants'
+import langConstants from '../utils/langConstants'
 
 const SignUpContainer = styled(Stack)(() => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
@@ -24,7 +26,7 @@ const SignUpContainer = styled(Stack)(() => ({
 }))
 
 const BackgroundImage = styled.div`
-  background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/f268d374-734d-474f-ad13-af5ba87ef9fc/web/IN-en-20250210-TRIFECTA-perspective_92338d5d-6ccd-4b1a-8536-eb2b0240a55e_large.jpg');
+  background-image: url(${backgroundImage});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -54,6 +56,8 @@ const Login = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState('')
   const [signInError, setSignInError] = useState('')
   const [signUpError, setSignUpError] = useState('')
+
+  const selectedLang = useSelector((state) => state.language.selectedLang)
 
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
@@ -183,7 +187,9 @@ const Login = () => {
               component="h6"
               variant="h4"
             >
-              {isSignIn ? 'Sign In' : 'Sign Up'}
+              {isSignIn
+                ? langConstants.signIn[selectedLang]
+                : langConstants.signUp[selectedLang]}
             </Typography>
 
             {!isSignIn && (
@@ -196,7 +202,7 @@ const Login = () => {
                   placeholder="Full name"
                   error={nameError}
                   helperText={nameErrorMessage}
-                  label="Full name"
+                  label={langConstants.fullName[selectedLang]}
                 />
               </FormControl>
             )}
@@ -211,7 +217,7 @@ const Login = () => {
                 variant="outlined"
                 error={emailError}
                 helperText={emailErrorMessage}
-                label="Email"
+                label={langConstants.email[selectedLang]}
               />
             </FormControl>
 
@@ -226,7 +232,7 @@ const Login = () => {
                 variant="outlined"
                 error={passwordError}
                 helperText={passwordErrorMessage}
-                label="Password"
+                label={langConstants.password[selectedLang]}
               />
             </FormControl>
             {signInError && (
@@ -240,7 +246,9 @@ const Login = () => {
               </Typography>
             )}
             <Button fullWidth variant="contained" type="submit">
-              {isSignIn ? 'Sign In' : 'Sign Up'}
+              {isSignIn
+                ? langConstants.signIn[selectedLang]
+                : langConstants.signUp[selectedLang]}
             </Button>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -253,14 +261,18 @@ const Login = () => {
               }}
               variant="body2"
             >
-              {!isSignIn ? 'Already have an account?' : 'New to Netflix?'}
+              {!isSignIn
+                ? langConstants.alreadyHaveAccount[selectedLang]
+                : langConstants.newToNetflix[selectedLang]}
               <Button
                 variant="contained"
                 color="success"
                 onClick={handleSignUpForm}
                 sx={{ textTransform: 'none', marginLeft: '6px' }}
               >
-                {!isSignIn ? 'Sign In' : 'Sign Up'}
+                {!isSignIn
+                  ? langConstants.signIn[selectedLang]
+                  : langConstants.signUp[selectedLang]}
               </Button>
             </Typography>
           </Box>

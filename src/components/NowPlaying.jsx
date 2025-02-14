@@ -3,6 +3,7 @@ import { Carousel, Image as AntdImage, Card as AntdCard } from 'antd'
 import { imageUrl } from '../utils/constants'
 import styled from 'styled-components'
 import { Typography } from '@mui/material'
+import langConstants from '../utils/langConstants'
 
 const { Meta } = AntdCard
 
@@ -54,6 +55,8 @@ const Image = styled(AntdImage)`
 
 const NowPlaying = () => {
   const movies = useSelector((store) => store.movies?.nowPlayingMovies)
+   const selectedLang = useSelector((state) => state.language.selectedLang)
+
   if (!movies) return null
   //   console.log('movies', movies)
 
@@ -66,7 +69,7 @@ const NowPlaying = () => {
           fontSize: { xs: '16px', md: '26px' },
         }}
       >
-        Now Playing
+        {langConstants.nowPlaying[selectedLang]}
       </Typography>
       <CarouselWrapper
         arrows

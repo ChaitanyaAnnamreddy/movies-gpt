@@ -9,6 +9,8 @@ import SecondaryContainer from './SecondaryContainer'
 import { Container } from '@mui/material'
 import styled from 'styled-components'
 import useAwardWinningTvShows from '../utils/useAwardWinningTvShows'
+import GptSearch from './GptSearch'
+import { useSelector } from 'react-redux'
 
 const StyledContainer = styled(Container)`
   padding-left: 0px !important;
@@ -17,6 +19,9 @@ const StyledContainer = styled(Container)`
 `
 
 const Browse = () => {
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch)
+  console.log('showGptSearch', showGptSearch)
+
   useNowPlayingMovies()
   usePopularMovies()
   useTopRatedMovies()
@@ -25,9 +30,15 @@ const Browse = () => {
 
   return (
     <StyledContainer maxWidth={false}>
-      <Header />
-      <MainContainer />
-      <SecondaryContainer />
+      {showGptSearch ? (
+        <GptSearch open={showGptSearch} />
+      ) : (
+        <>
+          <Header />
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
     </StyledContainer>
   )
 }

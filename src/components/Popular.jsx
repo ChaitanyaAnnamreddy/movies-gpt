@@ -3,6 +3,7 @@ import { Carousel, Image as AntdImage, Card as AntdCard } from 'antd'
 import { imageUrl } from '../utils/constants'
 import styled from 'styled-components'
 import { Typography } from '@mui/material'
+import langConstants from '../utils/langConstants'
 
 const { Meta } = AntdCard
 
@@ -31,6 +32,8 @@ const Image = styled(AntdImage)`
 
 const Popular = () => {
   const movies = useSelector((store) => store.movies?.popularMovies)
+  const selectedLang = useSelector((state) => state.language.selectedLang)
+
   if (!movies) return null
 
   return (
@@ -42,7 +45,7 @@ const Popular = () => {
           fontSize: { xs: '16px', md: '26px' },
         }}
       >
-        Popular Movies
+        {langConstants.popularMovies[selectedLang]}
       </Typography>
       <Carousel
         arrows
