@@ -67,7 +67,7 @@ const RecommendationMovies = () => {
           ml: 2,
           fontSize: { xs: '16px', md: '26px' },
           position: 'absolute',
-          marginTop: { xs: '-30px', sm: '-40px', md: '-120px', lg: '-170px' },
+          marginTop: { xs: '-36px', sm: '-40px', md: '-120px', lg: '-170px' },
         }}
       >
         {langConstants.recommendations[selectedLang]}

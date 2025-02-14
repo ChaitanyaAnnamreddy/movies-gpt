@@ -22,7 +22,7 @@ import { Button } from '@mui/material'
 import { toggleGptSearch } from '../utils/useGptSlice'
 import langConstants from '../utils/langConstants'
 import { Dropdown, Space } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
+import { CaretDownOutlined } from '@ant-design/icons'
 import { setLanguage } from '../utils/languageSlice'
 
 // const { Search } = Input
@@ -194,9 +194,12 @@ const Header = () => {
               arrow={{ pointAtCenter: true }}
               placement="bottom"
             >
-              <Button variant="contained" sx={{ textTransform: 'none' }}>
+              <Button
+                variant="contained"
+                sx={{ textTransform: 'none' }}
+              >
                 <Space>
-                  {selectedLanguageLabel} <DownOutlined />
+                  {selectedLanguageLabel} <CaretDownOutlined />
                 </Space>
               </Button>
             </Dropdown>
