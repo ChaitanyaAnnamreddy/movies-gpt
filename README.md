@@ -61,6 +61,8 @@ Your app is ready to be deployed!
 - GPT Search Bar
 - (BONUS) Multi-language Feature in our App)
 - Get Open AI Api Key
+  <img width="1463" alt="Screenshot 2025-02-15 at 3 50 50 PM" src="https://github.com/user-attachments/assets/e5534290-3133-452e-8387-baf7f1095d83" />
+
 - Gpt Search API Call
 - fetched gptMoviesSuggestions from TMDB
 - created gptSlice added data
