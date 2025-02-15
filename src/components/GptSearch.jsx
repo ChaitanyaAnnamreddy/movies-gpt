@@ -1,25 +1,41 @@
-import GptSearchBar from './GptSearchBar'
 import GptMovieSuggestion from './GptMovieSuggestion'
 import Header from './Header'
 import styled from 'styled-components'
-import { backgroundImage } from '../utils/constants'
+import { Result } from 'antd'
+import { useSelector } from 'react-redux'
 
 const BackgroundImage = styled.div`
-  background-image: url(${backgroundImage});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  align-items: center;
-  justify-content: center;
+  backdrop-filter: blur(120px);
+  background-color: #030d17;
+`
+const StyledResult = styled(Result)`
+  .ant-result-title {
+    color: white !important;
+  }
 `
 
-const gptSearch = () => {
+const GptSearch = () => {
+  const selectedLang = useSelector((state) => state.movies.tmdbGPTSearchMovies)
   return (
-    <BackgroundImage>
-      <Header />
-      <GptSearchBar />
-      <GptMovieSuggestion />
-    </BackgroundImage>
+    <>
+      <BackgroundImage>
+        <Header />
+        {!selectedLang ? (
+          <>
+            <StyledResult
+              style={{ height: '90vh' }}
+              status="404"
+              title="Search for a movie and let AI do the magic✨"
+            />
+          </>
+        ) : (
+          <GptMovieSuggestion />
+        )}
+      </BackgroundImage>
+    </>
   )
 }
-export default gptSearch
+export default GptSearch

@@ -65,7 +65,7 @@ const Popular = () => {
                 <div>
                   <Image
                     preview={false}
-                    src={imageUrl + movie.backdrop_path}
+                    src={imageUrl + movie.poster_path}
                     alt="res-logo"
                     sx={{ borderRadius: '10px' }}
                   />

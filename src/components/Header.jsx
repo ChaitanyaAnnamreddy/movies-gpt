@@ -16,16 +16,13 @@ import { auth } from '../utils/firebase'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser, removeUser } from '../utils/userSlice'
 import styled from 'styled-components'
-import IconText from '../utils/IconText'
-// import { Input } from 'antd'
-import { Button } from '@mui/material'
-import { toggleGptSearch } from '../utils/useGptSlice'
+import { Button, useMediaQuery } from '@mui/material'
+import { toggleGptSearch } from '../utils/gptSlice'
 import langConstants from '../utils/langConstants'
 import { Dropdown, Space } from 'antd'
 import { CaretDownOutlined } from '@ant-design/icons'
 import { setLanguage } from '../utils/languageSlice'
-
-// const { Search } = Input
+import GptSearchBar from './GptSearchBar'
 
 const StyledHeader = styled(AppBar)`
   box-shadow: none !important;
@@ -44,6 +41,8 @@ const Header = () => {
   const selection = useSelector((store) => store.user)
   const selectedLang = useSelector((state) => state.language.selectedLang)
   const showGptSearch = useSelector((state) => state.gpt.showGptSearch)
+
+  const isSmallScreen = useMediaQuery('(max-width:600px)')
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -115,106 +114,90 @@ const Header = () => {
   }
 
   const items = [
-    {
-      key: 'en',
-      label: langConstants.en,
-    },
-    {
-      key: 'hi',
-      label: langConstants.hi,
-    },
-    {
-      key: 'ta',
-      label: langConstants.ta,
-    },
-    {
-      key: 'kn',
-      label: langConstants.kn,
-    },
-    {
-      key: 'te',
-      label: langConstants.te,
-    },
-    {
-      key: 'ml',
-      label: langConstants.ml,
-    },
-    {
-      key: 'es',
-      label: langConstants.es,
-    },
-    {
-      key: 'fr',
-      label: langConstants.fr,
-    },
-    {
-      key: 'de',
-      label: langConstants.de,
-    },
-    {
-      key: 'it',
-      label: langConstants.it,
-    },
-    {
-      key: 'ja',
-      label: langConstants.ja,
-    },
-    {
-      key: 'ko',
-      label: langConstants.ko,
-    },
-    {
-      key: 'pt',
-      label: langConstants.pt,
-    },
-    {
-      key: 'ru',
-      label: langConstants.ru,
-    },
-    {
-      key: 'zh',
-      label: langConstants.zh,
-    },
+    { key: 'en', label: langConstants.en },
+    { key: 'hi', label: langConstants.hi },
+    { key: 'ta', label: langConstants.ta },
+    { key: 'kn', label: langConstants.kn },
+    { key: 'te', label: langConstants.te },
+    { key: 'ml', label: langConstants.ml },
+    { key: 'es', label: langConstants.es },
+    { key: 'fr', label: langConstants.fr },
+    { key: 'de', label: langConstants.de },
+    { key: 'it', label: langConstants.it },
+    { key: 'ja', label: langConstants.ja },
+    { key: 'ko', label: langConstants.ko },
+    { key: 'pt', label: langConstants.pt },
+    { key: 'ru', label: langConstants.ru },
+    { key: 'zh', label: langConstants.zh },
   ]
 
   const menuProps = {
     items,
     onClick: handleMenuClick,
-    style: {
-      maxHeight: '200px',
-      overflowY: 'auto',
-      width: '150px',
-    },
+    style: { maxHeight: '200px', overflowY: 'auto', width: '150px' },
   }
 
   const selectedLanguageLabel =
     items.find((item) => item.key === selectedLang)?.label || 'English'
 
   return (
-    <StyledHeader position="sticky" color="white">
+    <StyledHeader position="sticky" color="black" backgroundColor="black">
       <Container maxWidth="2560px">
         <Toolbar
           disableGutters
-          sx={{ display: 'flex', justifyContent: 'space-between' }}
+          sx={{
+            display: 'flex',
+            flexDirection: isSmallScreen ? 'column' : 'row',
+            alignItems: 'center',
+            justifyContent: isSmallScreen ? 'center' : 'space-between',
+            gap: isSmallScreen ? 1 : 2,
+            width: '100%',
+          }}
         >
-          <img src="./netflix-logo.svg" alt="netflix" width={90} height={90} />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Dropdown
-              menu={menuProps}
-              trigger={['click']}
-              arrow={{ pointAtCenter: true }}
-              placement="bottom"
-              overlayStyle={{
-                maxHeight: '20px', // Adjust height as needed
-                overflowY: 'auto',
-              }}
-            >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: isSmallScreen ? 'row' : 'row',
+              alignItems: 'center',
+              justifyContent: isSmallScreen ? 'center' : 'space-between',
+              gap: isSmallScreen ? 1 : 2,
+              width: '100%',
+            }}
+          >
+            {/* LOGO */}
+            <img
+              src="./netflix-logo.svg"
+              alt="netflix"
+              width={90}
+              height={90}
+            />
+
+            {/* GPT SEARCH */}
+            {showGptSearch && <GptSearchBar />}
+          </Box>
+
+          {/* ON SMALL SCREENS, MOVE THIS BELOW */}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              //   width: isSmallScreen ? '100%' : 'auto',
+              justifyContent: isSmallScreen ? 'center' : 'flex-end',
+              //   mt: isSmallScreen ? 1 : 0,
+              marginBottom: isSmallScreen ? 2 : 0,
+            }}
+          >
+            {/* LANGUAGE SELECT */}
+            <Dropdown menu={menuProps} trigger={['click']} arrow>
               <Button variant="contained" sx={{ textTransform: 'none' }}>
                 <Space>
                   {selectedLanguageLabel} <CaretDownOutlined />
                 </Space>
               </Button>
             </Dropdown>
+
+            {/* GPT SEARCH TOGGLE */}
             {selection.user && (
               <Button
                 type="button"
@@ -227,14 +210,13 @@ const Header = () => {
                   : langConstants.gptSearch[selectedLang]}
               </Button>
             )}
+
+            {/* USER MENU */}
             {selection.user && (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Travis Howard"
-                      src={selection.user?.photoURL}
-                    />
+                    <Avatar alt="User" src={selection.user?.photoURL} />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -255,11 +237,7 @@ const Header = () => {
                 >
                   {settings.map((setting) => (
                     <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
-                      <IconText
-                        icon={setting.icon}
-                        text={setting.name}
-                        onClick={setting.onClick}
-                      />
+                      {setting.icon} {setting.name}
                     </MenuItem>
                   ))}
                 </Menu>
@@ -271,4 +249,5 @@ const Header = () => {
     </StyledHeader>
   )
 }
+
 export default Header

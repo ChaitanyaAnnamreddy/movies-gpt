@@ -9,6 +9,7 @@ const moviesSlice = createSlice({
     recommendationsMovies: null,
     topRatedMovies: null,
     awardWinningTvShows: null,
+    tmdbGPTSearchMovies: null,
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -29,6 +30,9 @@ const moviesSlice = createSlice({
     addAwardWinningTvShows: (state, action) => {
       state.awardWinningTvShows = action.payload
     },
+    addGptSearchMovies: (state, action) => {
+      state.tmdbGPTSearchMovies = action.payload
+    },
   },
 })
 
@@ -39,5 +43,6 @@ export const {
   addRecommendationsMovies,
   addTopRatedMovies,
   addAwardWinningTvShows,
+  addGptSearchMovies,
 } = moviesSlice.actions
 export default moviesSlice.reducer

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 
 const VideoTitle = ({ title, overview, img }) => {
   const selectedLang = useSelector((state) => state.language.selectedLang)
+
   return (
     <>
       <Container

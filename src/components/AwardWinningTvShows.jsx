@@ -32,7 +32,7 @@ const Image = styled(AntdImage)`
 
 const AwardWinningTvShows = () => {
   const movies = useSelector((store) => store.movies?.awardWinningTvShows)
-   const selectedLang = useSelector((state) => state.language.selectedLang)
+  const selectedLang = useSelector((state) => state.language.selectedLang)
 
   if (!movies) return null
 
@@ -45,7 +45,7 @@ const AwardWinningTvShows = () => {
           fontSize: { xs: '16px', md: '26px' },
         }}
       >
-       {langConstants.awardWinningTvShows[selectedLang]}
+        {langConstants.awardWinningTvShows[selectedLang]}
       </Typography>
       <Carousel
         arrows
@@ -65,7 +65,7 @@ const AwardWinningTvShows = () => {
                 <div>
                   <Image
                     preview={false}
-                    src={imageUrl + movie.backdrop_path}
+                    src={imageUrl + movie.poster_path}
                     alt="res-logo"
                     sx={{ borderRadius: '10px' }}
                   />

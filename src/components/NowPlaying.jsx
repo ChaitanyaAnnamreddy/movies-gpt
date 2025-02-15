@@ -58,7 +58,6 @@ const NowPlaying = () => {
    const selectedLang = useSelector((state) => state.language.selectedLang)
 
   if (!movies) return null
-  //   console.log('movies', movies)
 
   return (
     <>
@@ -89,7 +88,7 @@ const NowPlaying = () => {
                 <div>
                   <Image
                     preview={false}
-                    src={imageUrl + movie.backdrop_path}
+                    src={imageUrl + movie.poster_path}
                     alt="res-logo"
                     sx={{ borderRadius: '10px' }}
                   />
