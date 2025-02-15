@@ -60,9 +60,10 @@ Your app is ready to be deployed!
 - GPT Search Page
 - GPT Search Bar
 - (BONUS) Multi-language Feature in our App)
-- Get Open AI Api Key(platform.openai)
-  <img width="1463" alt="Screenshot 2025-02-15 at 3 50 50 PM" src="https://github.com/user-attachments/assets/e5534290-3133-452e-8387-baf7f1095d83" />
-- import npm i openai
+- Get Gemini AI Api Key([platform.openai](https://ai.google.dev/gemini-api/docs/api-key))
+ <img width="1405" alt="Screenshot 2025-02-15 at 6 32 55 PM" src="https://github.com/user-attachments/assets/248353a9-115e-4afe-ac97-aee93c1c7c9f" />
+
+- npm install @google/generative-ai
 - Gpt Search API Call
 - fetched gptMoviesSuggestions from TMDB
 - created gptSlice added data
