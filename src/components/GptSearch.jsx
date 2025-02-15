@@ -18,12 +18,12 @@ const StyledResult = styled(Result)`
 `
 
 const GptSearch = () => {
-  const selectedLang = useSelector((state) => state.movies.tmdbGPTSearchMovies)
+  const movies = useSelector((state) => state.movies.tmdbGPTSearchMovies)
   return (
     <>
       <BackgroundImage>
         <Header />
-        {!selectedLang ? (
+        {!movies ? (
           <>
             <StyledResult
               style={{ height: '90vh' }}

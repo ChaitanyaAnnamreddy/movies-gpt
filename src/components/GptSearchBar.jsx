@@ -16,7 +16,7 @@ const GptSearchBar = () => {
   const [loading, setLoading] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const dispatch = useDispatch()
-  const isSmallScreen = useMediaQuery('(max-width:500px)')
+  const isSmallScreen = useMediaQuery('(max-width:768px)')
 
   const searchMovieTMDB = async (movieName) => {
     const response = await fetch(
@@ -35,7 +35,18 @@ const GptSearchBar = () => {
 
     setLoading(true) // ✅ Use the prop function
 
-    const gptQuery = `Act as a movie recommendation system and suggest some movies for the search query. ${searchValue}. Only give me names of 5 movies, comma-separated like the example result given ahead. Example Result: Don, Dangal, Sholay, Gadar, Golmaal`
+    const gptQuery = `Act as a movie recommendation system. Based on the search query: "${searchValue}", suggest up to 6 relevant movies.  
+Ensure the output is in a **comma-separated format** and includes multiple related movies even if the query specifies a single movie.  
+Example output: Baahubali: The Beginning, Baahubali 2: The Conclusion, RRR, Eega, Magadheera, Arundhati
+
+### **Rules:**  
+- **Strictly return only movie names, comma-separated (no explanations, numbers, or descriptions).**  
+- **For genre-based queries, ensure all movies are strong representations of that genre.**  
+- **Do not include movies that mix genres unless comedy is the dominant genre.**  
+
+**Example:**  
+- Input: "Telugu comedy movies"  
+- Output: "Jathi Ratnalu, F2: Fun and Frustration, Brochevarevarura, Venky, Sudigadu, Bhale Bhale Magadivoy"`
 
     try {
       const result = await model.generateContent(gptQuery)
@@ -50,6 +61,8 @@ const GptSearchBar = () => {
         .split(',')
         .map((movie) => movie.trim())
         .filter((movie) => movie)
+
+      console.log('movieNames', movieNames)
 
       if (movieNames.length === 0) {
         throw new Error('GPT returned an empty list of movies')
@@ -79,7 +92,7 @@ const GptSearchBar = () => {
           size="large"
           onSearch={handleGPTSearch}
           enterButton={'Search'}
-          loading={loading} // ✅ Use loading prop
+          loading={loading}
         />
       </Flex>
     </Container>

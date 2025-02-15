@@ -23,9 +23,11 @@ import { Dropdown, Space } from 'antd'
 import { CaretDownOutlined } from '@ant-design/icons'
 import { setLanguage } from '../utils/languageSlice'
 import GptSearchBar from './GptSearchBar'
+import { clearMovies } from '../utils/moviesSlice'
 
 const StyledHeader = styled(AppBar)`
   box-shadow: none !important;
+  background-color: black;
 `
 
 const AvatarStyled = styled(Avatar)`
@@ -54,6 +56,7 @@ const Header = () => {
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearch())
+    dispatch(clearMovies())
   }
 
   React.useEffect(() => {
@@ -141,8 +144,8 @@ const Header = () => {
     items.find((item) => item.key === selectedLang)?.label || 'English'
 
   return (
-    <StyledHeader position="sticky" color="black" backgroundColor="black">
-      <Container maxWidth="2560px">
+    <StyledHeader position="sticky" >
+      <Container maxWidth="2560px" sx={{ backgroundColor: 'black' }}>
         <Toolbar
           disableGutters
           sx={{

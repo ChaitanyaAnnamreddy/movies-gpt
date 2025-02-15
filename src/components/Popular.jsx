@@ -2,8 +2,17 @@ import { useSelector } from 'react-redux'
 import { Carousel, Image as AntdImage, Card as AntdCard } from 'antd'
 import { imageUrl } from '../utils/constants'
 import styled from 'styled-components'
-import { Typography } from '@mui/material'
+import {
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+} from '@mui/material'
 import langConstants from '../utils/langConstants'
+import { useState } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
+import { Descriptions } from 'antd'
 
 const { Meta } = AntdCard
 
@@ -34,7 +43,20 @@ const Popular = () => {
   const movies = useSelector((store) => store.movies?.popularMovies)
   const selectedLang = useSelector((state) => state.language.selectedLang)
 
+  const [open, setOpen] = useState(false)
+  const [selectedMovie, setSelectedMovie] = useState(null)
+
   if (!movies) return null
+
+  const handleCardClick = (movie) => {
+    setSelectedMovie(movie)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setSelectedMovie(null)
+  }
 
   return (
     <>
@@ -59,7 +81,7 @@ const Popular = () => {
         ]}
       >
         {movies.map((movie) => (
-          <Card hoverable key={movie.id}>
+          <Card hoverable key={movie.id} onClick={() => handleCardClick(movie)}>
             <Meta
               description={
                 <div>
@@ -75,6 +97,58 @@ const Popular = () => {
           </Card>
         ))}
       </Carousel>
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" maxHeight="sm">
+        {selectedMovie && (
+          <>
+            <DialogTitle>
+              {selectedMovie.title}
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{ position: 'absolute', right: 8, top: 8 }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography variant="body1" gutterBottom>
+                {selectedMovie.overview || 'No description available.'}
+              </Typography>
+              <Image
+                preview={false}
+                src={imageUrl + selectedMovie.poster_path}
+                alt={selectedMovie.title}
+                width="100%"
+                style={{ margin: '10px 0' }}
+              />
+              <Descriptions
+                items={[
+                  {
+                    key: '1',
+                    label: 'Avg Rating',
+                    children: selectedMovie.vote_average,
+                  },
+                  {
+                    key: '2',
+                    label: 'Release Date',
+                    children: selectedMovie.release_date
+                      ? new Date(selectedMovie.release_date).toLocaleDateString(
+                          'en-GB',
+                          {
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric',
+                          }
+                        )
+                      : 'N/A',
+                  },
+                ]}
+                bordered
+              />
+            </DialogContent>
+          </>
+        )}
+      </Dialog>
     </>
   )
 }

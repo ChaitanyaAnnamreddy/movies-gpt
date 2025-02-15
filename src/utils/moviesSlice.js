@@ -33,6 +33,9 @@ const moviesSlice = createSlice({
     addGptSearchMovies: (state, action) => {
       state.tmdbGPTSearchMovies = action.payload
     },
+    clearMovies: (state) => {
+      state.tmdbGPTSearchMovies = null
+    },
   },
 })
 
@@ -44,5 +47,6 @@ export const {
   addTopRatedMovies,
   addAwardWinningTvShows,
   addGptSearchMovies,
+  clearMovies,
 } = moviesSlice.actions
 export default moviesSlice.reducer
