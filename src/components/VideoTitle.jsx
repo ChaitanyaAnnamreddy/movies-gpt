@@ -5,8 +5,10 @@ import Stack from '@mui/material/Stack'
 import { Container } from '@mui/material'
 import { Typography } from '@mui/material'
 import langConstants from '../utils/langConstants'
+import { useSelector } from 'react-redux'
 
 const VideoTitle = ({ title, overview, img }) => {
+  const selectedLang = useSelector((state) => state.language.selectedLang)
   return (
     <>
       <Container
@@ -50,7 +52,7 @@ const VideoTitle = ({ title, overview, img }) => {
               borderColor: 'white',
             }}
           >
-            {langConstants.play.en}
+            {langConstants.play[selectedLang]}
           </Button>
           <Button
             variant="outlined"
@@ -62,7 +64,7 @@ const VideoTitle = ({ title, overview, img }) => {
               borderColor: 'rgba(109, 109, 110, 0.1)',
             }}
           >
-            {langConstants.moreInfo.en}
+            {langConstants.moreInfo[selectedLang]}
           </Button>
         </Stack>
       </Container>

@@ -20,7 +20,6 @@ const StyledContainer = styled(Container)`
 
 const Browse = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch)
-  console.log('showGptSearch', showGptSearch)
 
   useNowPlayingMovies()
   usePopularMovies()

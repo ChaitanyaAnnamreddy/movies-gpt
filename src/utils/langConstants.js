@@ -465,6 +465,23 @@ const langConstants = {
     ru: 'Язык',
     zh: '语言',
   },
+  home: {
+    en: 'Home',
+    hi: 'होम',
+    ta: 'முகப்பு',
+    kn: 'ಮುಖಪುಟ',
+    te: 'హోమ్',
+    ml: 'ഹോം',
+    es: 'Inicio',
+    fr: 'Accueil',
+    de: 'Startseite',
+    it: 'Home',
+    ja: 'ホーム',
+    ko: '홈',
+    pt: 'Início',
+    ru: 'Главная',
+    zh: '首页',
+  },
 }
 
 export default langConstants

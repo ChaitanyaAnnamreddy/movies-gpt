@@ -43,6 +43,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const selection = useSelector((store) => store.user)
   const selectedLang = useSelector((state) => state.language.selectedLang)
+  const showGptSearch = useSelector((state) => state.gpt.showGptSearch)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -119,6 +120,26 @@ const Header = () => {
       label: langConstants.en,
     },
     {
+      key: 'hi',
+      label: langConstants.hi,
+    },
+    {
+      key: 'ta',
+      label: langConstants.ta,
+    },
+    {
+      key: 'kn',
+      label: langConstants.kn,
+    },
+    {
+      key: 'te',
+      label: langConstants.te,
+    },
+    {
+      key: 'ml',
+      label: langConstants.ml,
+    },
+    {
       key: 'es',
       label: langConstants.es,
     },
@@ -154,27 +175,17 @@ const Header = () => {
       key: 'zh',
       label: langConstants.zh,
     },
-    {
-      key: 'hi',
-      label: langConstants.hi,
-    },
-    {
-      key: 'ta',
-      label: langConstants.ta,
-    },
-    {
-      key: 'kn',
-      label: langConstants.kn,
-    },
-    {
-      key: 'te',
-      label: langConstants.te,
-    },
-    {
-      key: 'ml',
-      label: langConstants.ml,
-    },
   ]
+
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+    style: {
+      maxHeight: '200px',
+      overflowY: 'auto',
+      width: '150px',
+    },
+  }
 
   const selectedLanguageLabel =
     items.find((item) => item.key === selectedLang)?.label || 'English'
@@ -189,15 +200,16 @@ const Header = () => {
           <img src="./netflix-logo.svg" alt="netflix" width={90} height={90} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Dropdown
-              menu={{ items, onClick: handleMenuClick }}
+              menu={menuProps}
               trigger={['click']}
               arrow={{ pointAtCenter: true }}
               placement="bottom"
+              overlayStyle={{
+                maxHeight: '20px', // Adjust height as needed
+                overflowY: 'auto',
+              }}
             >
-              <Button
-                variant="contained"
-                sx={{ textTransform: 'none' }}
-              >
+              <Button variant="contained" sx={{ textTransform: 'none' }}>
                 <Space>
                   {selectedLanguageLabel} <CaretDownOutlined />
                 </Space>
@@ -210,7 +222,9 @@ const Header = () => {
                 onClick={handleGptSearchClick}
                 sx={{ textTransform: 'none' }}
               >
-                {langConstants.gptSearch[selectedLang]}
+                {showGptSearch
+                  ? langConstants.home[selectedLang]
+                  : langConstants.gptSearch[selectedLang]}
               </Button>
             )}
             {selection.user && (
