@@ -12,6 +12,7 @@ import {
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Descriptions } from 'antd'
+import useMovieTrailer from '../utils/useMovieTrailer'
 
 const { Meta } = AntdCard
 
@@ -38,8 +39,10 @@ const GptMovieSuggestion = () => {
   const moviesData = useSelector((store) => store.movies?.tmdbGPTSearchMovies)
   const [open, setOpen] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(null)
-  console.log('moviesData', moviesData)
 
+  const { trailerVideo } = useSelector((store) => store.movies)
+
+  useMovieTrailer(selectedMovie?.id)
   if (!moviesData || moviesData.length === 0) return null
 
   const handleCardClick = (movie) => {
@@ -135,13 +138,16 @@ const GptMovieSuggestion = () => {
                       <Typography variant="body1" gutterBottom>
                         {selectedMovie.overview || 'No description available.'}
                       </Typography>
-                      <Image
-                        preview={false}
-                        src={imageUrl + selectedMovie.poster_path}
-                        alt={selectedMovie.title}
-                        width="100%"
-                        style={{ margin: '10px 0' }}
-                      />
+                      {trailerVideo && (
+                        <iframe
+                          style={{ width: '100%', aspectRatio: '16 / 9' }}
+                          src={`https://www.youtube.com/embed/${trailerVideo}?autoplay=1&mute=1`}
+                          title="YouTube video player"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                        ></iframe>
+                      )}
                       <Descriptions
                         items={[
                           {

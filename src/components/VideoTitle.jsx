@@ -7,7 +7,7 @@ import { Typography } from '@mui/material'
 import langConstants from '../utils/langConstants'
 import { useSelector } from 'react-redux'
 
-const VideoTitle = ({ title, overview, img }) => {
+const VideoTitle = ({ title, overview }) => {
   const selectedLang = useSelector((state) => state.language.selectedLang)
 
   return (
