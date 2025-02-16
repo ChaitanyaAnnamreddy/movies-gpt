@@ -41,6 +41,7 @@ const GptMovieSuggestion = () => {
   const [selectedMovie, setSelectedMovie] = useState(null)
 
   const { trailerVideo } = useSelector((store) => store.movies)
+  const { trailerName } = useSelector((store) => store.movies)
 
   useMovieTrailer(selectedMovie?.id)
   if (!moviesData || moviesData.length === 0) return null
@@ -125,7 +126,7 @@ const GptMovieSuggestion = () => {
                 {selectedMovie && (
                   <>
                     <DialogTitle>
-                      {selectedMovie.title}
+                      {trailerName}
                       <IconButton
                         aria-label="close"
                         onClick={handleClose}

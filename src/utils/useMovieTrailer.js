@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { addTrailerVideo } from '../utils/moviesSlice'
+import { addTrailerVideo, addTrailerName } from '../utils/moviesSlice'
 import { API_URL } from '../utils/constants'
 
 const useMovieTrailer = (movieId) => {
@@ -21,6 +21,8 @@ const useMovieTrailer = (movieId) => {
           const trailer =
             json.results.find((video) => video.type === 'Trailer') ||
             json.results[0]
+
+          dispatch(addTrailerName(trailer?.name || ''))
           dispatch(addTrailerVideo(trailer?.key || ''))
         }
       } catch (error) {

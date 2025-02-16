@@ -70,7 +70,9 @@ const Image = styled(AntdImage)`
 const TopRatedMovies = () => {
   const movies = useSelector((store) => store.movies?.topRatedMovies)
   const selectedLang = useSelector((state) => state.language.selectedLang)
+  
   const { trailerVideo } = useSelector((store) => store.movies)
+  const { trailerName } = useSelector((store) => store.movies)
 
   const [open, setOpen] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(null)
@@ -132,7 +134,7 @@ const TopRatedMovies = () => {
         {selectedMovie && (
           <>
             <DialogTitle>
-              {selectedMovie.title}
+              {trailerName}
               <IconButton
                 aria-label="close"
                 onClick={handleClose}

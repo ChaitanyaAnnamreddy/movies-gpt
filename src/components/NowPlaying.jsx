@@ -72,6 +72,8 @@ const NowPlaying = () => {
   useMovieTrailer(selectedMovie?.id)
 
   const { trailerVideo } = useSelector((store) => store.movies)
+  const { trailerName } = useSelector((store) => store.movies)
+
   if (!movies) return null
 
   const handleCardClick = (movie) => {
@@ -127,7 +129,7 @@ const NowPlaying = () => {
         {selectedMovie && (
           <>
             <DialogTitle>
-              {selectedMovie.title}
+              {trailerName}
               <IconButton
                 aria-label="close"
                 onClick={handleClose}

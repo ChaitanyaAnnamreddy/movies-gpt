@@ -10,6 +10,7 @@ const moviesSlice = createSlice({
     topRatedMovies: null,
     awardWinningTvShows: null,
     tmdbGPTSearchMovies: null,
+    trailerName: null,
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -17,6 +18,9 @@ const moviesSlice = createSlice({
     },
     addTrailerVideo: (state, action) => {
       state.trailerVideo = action.payload
+    },
+    addTrailerName: (state, action) => {
+      state.trailerName = action.payload
     },
     addPopularMovies: (state, action) => {
       state.popularMovies = action.payload
@@ -42,6 +46,7 @@ const moviesSlice = createSlice({
 export const {
   addNowPlayingMovies,
   addTrailerVideo,
+  addTrailerName,
   addPopularMovies,
   addRecommendationsMovies,
   addTopRatedMovies,

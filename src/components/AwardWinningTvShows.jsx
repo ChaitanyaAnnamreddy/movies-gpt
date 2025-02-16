@@ -43,8 +43,9 @@ const Image = styled(AntdImage)`
 const AwardWinningTvShows = () => {
   const movies = useSelector((store) => store.movies?.awardWinningTvShows)
   const selectedLang = useSelector((state) => state.language.selectedLang)
-  const { trailerVideo } = useSelector((store) => store.movies)
 
+  const { trailerVideo } = useSelector((store) => store.movies)
+  const { trailerName } = useSelector((store) => store.movies)
   const [open, setOpen] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(null)
 
@@ -105,7 +106,7 @@ const AwardWinningTvShows = () => {
         {selectedMovie && (
           <>
             <DialogTitle>
-              {selectedMovie.title || selectedMovie.name}
+              {trailerName}
               <IconButton
                 aria-label="close"
                 onClick={handleClose}
