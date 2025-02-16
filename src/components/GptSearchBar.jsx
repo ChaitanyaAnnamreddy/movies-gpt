@@ -82,7 +82,7 @@ Example output: Baahubali: The Beginning, Baahubali 2: The Conclusion, RRR, Eega
 
   return (
     <Container maxWidth="2500px">
-      <Flex justify="center" items="center" direction="column">
+      <Flex justify="end" items="center" direction="column">
         <Search
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}

@@ -1,4 +1,3 @@
-import Header from './Header'
 import React from 'react'
 import useNowPlayingMovies from '../utils/useNowPlayingMovies'
 import usePopularMovies from '../utils/usePopularMovies'
@@ -33,7 +32,6 @@ const Browse = () => {
         <GptSearch open={showGptSearch} />
       ) : (
         <>
-          <Header />
           <MainContainer />
           <SecondaryContainer />
         </>

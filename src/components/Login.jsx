@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import Header from './Header'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import styled from 'styled-components'
@@ -149,7 +148,19 @@ const Login = () => {
     } else {
       //signIn logic
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {})
+        .then((userCredential) => {
+          const user = userCredential.user
+          dispatch(
+            addUser({
+              user: {
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+              },
+            })
+          )
+        })
         .catch((error) => {
           const errorCode = error.code
           const errorMessage = error.message
@@ -168,7 +179,6 @@ const Login = () => {
 
   return (
     <BackgroundImage>
-      <Header />
       <SignUpContainer direction="column" justifyContent="center">
         <Card sx={{ minWidth: 275 }}>
           <Box

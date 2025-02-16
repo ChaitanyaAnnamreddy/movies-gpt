@@ -22,20 +22,17 @@ const CarouselWrapper = styled(Carousel)`
 
   @media (max-width: 1024px) {
     margin-top: -80px;
-    // background-color: black;
     padding-top: 5px;
     padding-bottom: 5px;
   }
 
   @media (max-width: 768px) {
     margin-top: -15px;
-    background-color: black;
     padding-top: 5px;
   }
 
   @media (max-width: 425px) {
     margin-top: -5px;
-    // background-color: black;
     padding-top: 5px;
   }
 `
@@ -72,7 +69,6 @@ const RecommendationMovies = () => {
   useMovieTrailer(selectedMovie?.id)
 
   const { trailerVideo } = useSelector((store) => store.movies)
-
 
   if (!movies) return null
 
@@ -146,7 +142,11 @@ const RecommendationMovies = () => {
               </Typography>
               {trailerVideo && (
                 <iframe
-                  style={{ width: '100%', aspectRatio: '16 / 9' }}
+                  style={{
+                    width: '100%',
+                    aspectRatio: '16 / 9',
+                    margin: '15px 0px',
+                  }}
                   src={`https://www.youtube.com/embed/${trailerVideo}?autoplay=1&mute=1`}
                   title="YouTube video player"
                   frameBorder="0"

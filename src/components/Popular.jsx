@@ -120,7 +120,11 @@ const Popular = () => {
               </Typography>
               {trailerVideo && (
                 <iframe
-                  style={{ width: '100%', aspectRatio: '16 / 9' }}
+                  style={{
+                    width: '100%',
+                    aspectRatio: '16 / 9',
+                    margin: '15px 0px',
+                  }}
                   src={`https://www.youtube.com/embed/${trailerVideo}?autoplay=1&mute=1`}
                   title="YouTube video player"
                   frameBorder="0"

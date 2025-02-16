@@ -34,7 +34,7 @@ const langConstants = {
   },
 
   gptSearch: {
-    en: 'Search',
+    en: 'GPT Search',
     hi: 'खोज',
     ta: 'தேடல்',
     kn: 'ಹುಡುಕಾಟ',

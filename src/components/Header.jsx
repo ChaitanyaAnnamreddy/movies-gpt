@@ -144,8 +144,12 @@ const Header = () => {
     items.find((item) => item.key === selectedLang)?.label || 'English'
 
   return (
-    <StyledHeader position="sticky" >
-      <Container maxWidth="2560px" sx={{ backgroundColor: 'black' }}>
+    <StyledHeader position="sticky">
+      <Container
+        maxWidth="2560px"
+        // sx={{ backgroundColor: 'black' }}
+        className="dark:bg-gray-900"
+      >
         <Toolbar
           disableGutters
           sx={{
@@ -183,17 +187,22 @@ const Header = () => {
           <Box
             sx={{
               display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'row',
               alignItems: 'center',
               gap: 2,
-              //   width: isSmallScreen ? '100%' : 'auto',
-              justifyContent: isSmallScreen ? 'center' : 'flex-end',
-              //   mt: isSmallScreen ? 1 : 0,
+              paddingLeft: isSmallScreen ? '66px' : 0,
               marginBottom: isSmallScreen ? 2 : 0,
             }}
           >
             {/* LANGUAGE SELECT */}
             <Dropdown menu={menuProps} trigger={['click']} arrow>
-              <Button variant="contained" sx={{ textTransform: 'none' }}>
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: 'none',
+                }}
+              >
                 <Space>
                   {selectedLanguageLabel} <CaretDownOutlined />
                 </Space>
@@ -203,10 +212,13 @@ const Header = () => {
             {/* GPT SEARCH TOGGLE */}
             {selection.user && (
               <Button
-                type="button"
                 variant="contained"
                 onClick={handleGptSearchClick}
-                sx={{ textTransform: 'none' }}
+                sx={{
+                  textTransform: 'none',
+                  whiteSpace: 'nowrap',
+                  minWidth: { xs: 100, sm: 110 },
+                }}
               >
                 {showGptSearch
                   ? langConstants.home[selectedLang]
@@ -239,8 +251,14 @@ const Header = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
-                      {setting.icon} {setting.name}
+                    <MenuItem
+                      key={setting.id}
+                      onClick={() => {
+                        setting.onClick() // First execute the action (navigate/sign out)
+                        handleCloseUserMenu() // Then close the menu
+                      }}
+                    >
+                      {setting.icon} &ensp;{setting.name}
                     </MenuItem>
                   ))}
                 </Menu>

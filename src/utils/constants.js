@@ -1,5 +1,5 @@
 export const USER_IMG =
-  'https://occ-0-1946-2164.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABaTaeLyroqVK-klnAH9Amv7xGoV7wU2DGoRA0lEEk_eq4ECVWsfMbfE0HpW7_2-Lcjv92PsGptTTTmcz68PQf3FJ-EZujhI.png?r=a11'
+  'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
 
 export const API_URL = {
   method: 'GET',
