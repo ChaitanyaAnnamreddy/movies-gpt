@@ -6,7 +6,7 @@ import { useState } from 'react'
 import model from '../utils/geminiai'
 import { API_URL } from '../utils/constants'
 import { useDispatch } from 'react-redux'
-import { addGptSearchMovies } from '../utils/moviesSlice'
+import { addGptSearchMovies } from '../utils/store/moviesSlice'
 
 const { Search } = Input
 

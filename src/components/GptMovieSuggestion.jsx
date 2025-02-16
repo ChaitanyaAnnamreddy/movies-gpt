@@ -12,7 +12,7 @@ import {
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Descriptions } from 'antd'
-import useMovieTrailer from '../utils/useMovieTrailer'
+import useMovieTrailer from '../hooks/useMovieTrailer'
 
 const { Meta } = AntdCard
 

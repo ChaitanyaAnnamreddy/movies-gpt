@@ -5,7 +5,7 @@ import Account from './Account'
 import Profile from './Profile'
 import Error from './Error'
 import { Provider } from 'react-redux'
-import appStore from '../utils/appStore'
+import appStore from '../utils/store/appStore'
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
 

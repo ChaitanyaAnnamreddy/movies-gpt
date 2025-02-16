@@ -13,7 +13,7 @@ import langConstants from '../utils/langConstants'
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Descriptions } from 'antd'
-import useMovieTrailer from '../utils/useMovieTrailer'
+import useMovieTrailer from '../hooks/useMovieTrailer'
 
 const { Meta } = AntdCard
 
@@ -43,7 +43,7 @@ const Image = styled(AntdImage)`
 const Popular = () => {
   const movies = useSelector((store) => store.movies?.popularMovies)
   const selectedLang = useSelector((state) => state.language.selectedLang)
-  
+
   const { trailerVideo } = useSelector((store) => store.movies)
   const { trailerName } = useSelector((store) => store.movies)
 

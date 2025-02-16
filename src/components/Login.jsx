@@ -14,7 +14,7 @@ import {
 } from 'firebase/auth'
 import { auth } from '../utils/firebase'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser } from '../utils/userSlice'
+import { addUser } from '../utils/store/userSlice'
 import { USER_IMG } from '../utils/constants'
 import { backgroundImage } from '../utils/constants'
 import langConstants from '../utils/langConstants'

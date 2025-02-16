@@ -34,11 +34,11 @@ const Profile = () => {
 
                 <div>
                   <div className="flex items-center my-1">
-                    <div className="truncate text-gray-700 dark:text-white">
+                    <div className="truncate text-gray-400">
                       chaitanyaannamreddy@gmail.com
                     </div>
                   </div>
-                  <div className="flex items-center my-1 text-gray-700 dark:text-white">
+                  <div className="flex items-center my-1 text-gray-400">
                     <div>78*******4</div>
                   </div>
                 </div>
@@ -48,17 +48,17 @@ const Profile = () => {
                 <h2 className="text-lg font-poppins font-bold text-top-color dark:text-white">
                   Skills
                 </h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="border-2 w-12 border-top-color my-3"></div>
 
                 <div>
-                  <div className="flex items-center my-1 text-gray-700 dark:text-white">
-                    <div className="ml-2">React, NextJS</div>
+                  <div className="flex items-center my-1 text-gray-400">
+                    <div className="ml-1">React, NextJS</div>
                   </div>
-                  <div className="flex items-center my-1 text-gray-700 dark:text-white">
-                    <div className="ml-2">Html, CSS, JS</div>
+                  <div className="flex items-center my-1 text-gray-400">
+                    <div className="ml-1">Html, CSS, JS</div>
                   </div>
-                  <div className="flex items-center my-1 text-gray-700 dark:text-white">
-                    <div className="ml-2">Tailwind CSS</div>
+                  <div className="flex items-center my-1 text-gray-400">
+                    <div className="ml-1">Tailwind CSS</div>
                   </div>
                 </div>
               </div>
@@ -67,29 +67,27 @@ const Profile = () => {
                 <h2 className="text-lg font-poppins font-bold text-top-color dark:text-white">
                   Education Background
                 </h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="border-2 w-48 border-top-color my-3"></div>
 
                 <div className="flex flex-col space-y-1">
                   <div className="flex flex-col">
-                    <p className="font-semibold text-xs text-gray-100 dark:text-white">
+                    <p className="font-semibold text-xs text-gray-400 dark:text-white">
                       2022
                     </p>
-                    <p className="text-sm font-medium dark:text-white">
-                      <span className="text-green-700 dark:text-white">
+                    <p className="text-sm font-medium text-gray-400">
+                      <span className="text-gray-400">
                         M.S. (Data Science and Artificial Intelligence)
                       </span>
                       , <br></br>Bournemouth University, UK.
                     </p>
                   </div>
                   <div className="flex flex-col">
-                    <p className="font-semibold text-xs text-gray-100 dark:text-white">
+                    <p className="font-semibold text-xs text-gray-400 dark:text-white">
                       2018
                     </p>
-                    <p className="text-sm font-medium dark:text-white">
-                      <span className="text-green-700 dark:text-white">
-                        B-Tech
-                      </span>
-                      , Vellore Institute of Technology, Vellore.
+                    <p className="text-sm font-medium text-gray-400">
+                      <span className="text-gray-400">B-Tech</span>, Vellore
+                      Institute of Technology, Vellore.
                     </p>
                   </div>
                 </div>
@@ -103,7 +101,7 @@ const Profile = () => {
                   About Me
                 </h2>
                 <div className="border-2 w-20 border-top-color my-3"></div>
-                <p>
+                <p className="text-gray-400 pl-2 ">
                   I am currently interning as a Frontend Developer and Webflow
                   Developer at Atomicwork, where I contribute to creating a
                   modern service management platform designed to revolutionize
@@ -118,7 +116,7 @@ const Profile = () => {
                 <h2 className="text-lg font-poppins font-bold text-top-color">
                   Professional Experience
                 </h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="border-2 w-48 border-top-color my-3"></div>
 
                 <div className="flex flex-col">
                   <div className="flex flex-col">
@@ -129,7 +127,7 @@ const Profile = () => {
                     <p className="font-semibold text-sm text-gray-400 dark:text-white mt-2 mb-1">
                       Key Responsibilities
                     </p>
-                    <ul className="text-sm list-disc pl-4 space-y-1 text-gray-400 dark:text-white">
+                    <ul className="text-sm list-disc pl-4 space-y-1 text-gray-400">
                       <li>
                         Collaborated with cross-functional teams, including
                         design and backend engineering, to develop and launch
@@ -164,14 +162,14 @@ const Profile = () => {
                 <h2 className="text-lg font-poppins font-bold text-top-color">
                   Projects
                 </h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="border-2 w-16 border-top-color my-3"></div>
 
                 <div className="flex flex-col">
                   <div className="flex flex-col">
                     <p className="text-lg font-semibold text-white">
                       Swiggy Clone Application
                     </p>
-                    <p className="font-normal text-sm text-gray-400 dark:text-white mb-1 pl-2">
+                    <p className="font-normal text-sm text-gray-400  mb-1 pl-2">
                       Developed a responsive food ordering web application using
                       React, allowing users to browse menus, add items to the
                       cart, and place orders. Integrated Mock Swiggy Live API
@@ -191,7 +189,7 @@ const Profile = () => {
                     <p className="text-lg font-semibold text-white">
                       Movies GPT – AI-powered movie browsing app
                     </p>
-                    <p className="font-normal text-sm text-gray-400 dark:text-white mb-1 pl-2">
+                    <p className="font-normal text-sm text-gray-400 mb-1 pl-2">
                       Developed a Netflix clone with AI-powered movie
                       recommendations using OpenAI API.Implemented user
                       authentication (Sign Up, Login, Logout) with Firebase.

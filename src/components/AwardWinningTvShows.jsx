@@ -13,7 +13,7 @@ import langConstants from '../utils/langConstants'
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Descriptions } from 'antd'
-import useMovieTrailer from '../utils/useMovieTrailer'
+import useMovieTrailer from '../hooks/useMovieTrailer'
 
 const { Meta } = AntdCard
 
@@ -48,7 +48,8 @@ const AwardWinningTvShows = () => {
   const { trailerName } = useSelector((store) => store.movies)
   const [open, setOpen] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(null)
-
+  console.log('trailerVideo', trailerVideo)
+  console.log('trailerName', trailerName)
   useMovieTrailer(selectedMovie?.id)
 
   if (!movies) return null
